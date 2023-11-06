@@ -1,10 +1,15 @@
-import Button from "react-bootstrap/Button";
-
+import TodoInput from "@/components/TodoInput";
+import TodoItemList from "@/components/TodoList";
+import Container from "react-bootstrap/Container";
+import Stack from "react-bootstrap/Stack";
 function App() {
   return (
-    <div>
-      <Button>Primary</Button>
-    </div>
+    <Container className="mt-4">
+      <Stack gap={4}>
+        <TodoInput />
+        <TodoItemList />
+      </Stack>
+    </Container>
   );
 }
 
