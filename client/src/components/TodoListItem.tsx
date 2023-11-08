@@ -9,8 +9,8 @@ type TodoItemProps = {
 };
 
 const TodoItem = ({ todo }: TodoItemProps) => {
-  const changeTodoStatus = () => {
-    alert("todo done degisti");
+  const updateTodo = (todo: Todo) => {
+    alert(`todo updated to ${JSON.stringify(todo, null, 2)}`);
   };
 
   const deleteTodo = () => {
@@ -20,7 +20,12 @@ const TodoItem = ({ todo }: TodoItemProps) => {
 
   const editTodo = () => {
     const newTodo = prompt("Change todo");
-    if (newTodo) alert(`todo changed to ${newTodo}`);
+    if (newTodo) {
+      updateTodo({
+        ...todo,
+        title: newTodo,
+      });
+    }
   };
 
   return (
@@ -36,7 +41,7 @@ const TodoItem = ({ todo }: TodoItemProps) => {
         <Form.Check
           type="checkbox"
           checked={todo.done}
-          onChange={changeTodoStatus}
+          onChange={() => updateTodo({ ...todo, done: !todo.done })}
           name="todoStatus"
         />
         <button className="text-warning" onClick={editTodo}>
