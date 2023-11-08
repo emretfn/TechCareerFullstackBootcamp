@@ -32,7 +32,7 @@ const TodoItemList = () => {
       {/* Todo List */}
       <Stack gap={3}>
         {mockTodo.map((todo) => (
-          <TodoItem todo={todo} />
+          <TodoItem key={todo.id} todo={todo} />
         ))}
       </Stack>
     </Stack>

@@ -9,6 +9,20 @@ type TodoItemProps = {
 };
 
 const TodoItem = ({ todo }: TodoItemProps) => {
+  const changeTodoStatus = () => {
+    alert("todo done degisti");
+  };
+
+  const deleteTodo = () => {
+    const isConfirmed = confirm("Are you sure to delete todo?");
+    if (isConfirmed) alert("todo deleted");
+  };
+
+  const editTodo = () => {
+    const newTodo = prompt("Change todo");
+    if (newTodo) alert(`todo changed to ${newTodo}`);
+  };
+
   return (
     <Stack key={todo.id} direction="horizontal" className="border rounded p-3">
       <p
@@ -22,12 +36,13 @@ const TodoItem = ({ todo }: TodoItemProps) => {
         <Form.Check
           type="checkbox"
           checked={todo.done}
-          onChange={() => alert("todo done degisti")}
+          onChange={changeTodoStatus}
+          name="todoStatus"
         />
-        <button className="text-warning">
+        <button className="text-warning" onClick={editTodo}>
           <FaPencilAlt />
         </button>
-        <button className="text-danger">
+        <button className="text-danger" onClick={deleteTodo}>
           <FaTrash />
         </button>
       </Stack>
