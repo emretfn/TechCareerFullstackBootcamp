@@ -30,7 +30,8 @@ public class TodoController {
             description = "You can add new todo with this endpoint.",
             responses = {
                     @ApiResponse(responseCode = "201", description = "It returns added todo.",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Todo.class)))
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Todo.class))),
+                    @ApiResponse(responseCode = "400", description = "Title is a required field. If not provided, 400 status code is returned.", content = @Content)
             }
     )
     public ResponseEntity<Todo> addTodo(@RequestBody Todo todo) {
@@ -57,7 +58,8 @@ public class TodoController {
     @Operation(summary = "Get specific todo",
             description = "You can get specific todo with todo id. It returns just a todo.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "It returns just a todo.")
+                    @ApiResponse(responseCode = "200", description = "It returns just a todo."),
+                    @ApiResponse(responseCode = "404", description = "Todo not found", content = @Content)
             }
     )
     public ResponseEntity<Todo> getTodo(@PathVariable("todoId") Long todoId) {
@@ -70,7 +72,8 @@ public class TodoController {
     @Operation(summary = "Delete specific todo",
             description = "You can delete a specific todo with this endpoint.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "It returns nothing.")
+                    @ApiResponse(responseCode = "200", description = "It returns nothing."),
+                    @ApiResponse(responseCode = "404", description = "The todo to be deleted could not be found with the given id")
             }
     )
     public ResponseEntity<Void> deleteTodo(@PathVariable("todoId") Long todoId) {
@@ -83,7 +86,8 @@ public class TodoController {
     @Operation(summary = "Update a specific todos",
             description = "You can update a specific todo with todo id.",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "It returns updated todo.")
+                    @ApiResponse(responseCode = "200", description = "It returns updated todo."),
+                    @ApiResponse(responseCode = "404", description = "The todo to be updated could not be found with the given id", content = @Content)
             }
     )
     public ResponseEntity<Todo> updateTodo(@PathVariable("todoId") Long todoId, @RequestBody Todo newTodo) {
