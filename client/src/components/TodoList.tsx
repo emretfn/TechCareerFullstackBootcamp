@@ -1,21 +1,18 @@
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import TodoItem from "./TodoListItem";
-import { useEffect, useState } from "react";
-import { axios } from "@/lib/axios";
-import { Todo } from "@/lib/types";
+import { useTodos } from "@/service/api/todos/getTodos";
 
 const TodoItemList = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const todosQuery = useTodos();
 
-  useEffect(() => {
-    async function getTodos() {
-      const { data } = await axios.get("/todos");
-      setTodos(data);
-    }
+  if (todosQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
 
-    getTodos();
-  }, []);
+  if (!todosQuery.data) {
+    return null;
+  }
 
   return (
     <Stack gap={4}>
@@ -27,7 +24,7 @@ const TodoItemList = () => {
       </Stack>
       {/* Todo List */}
       <Stack gap={3}>
-        {todos.map((todo) => (
+        {todosQuery.data.map((todo) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}
       </Stack>

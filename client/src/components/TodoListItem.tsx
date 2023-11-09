@@ -3,22 +3,25 @@ import Form from "react-bootstrap/Form";
 
 import { Todo } from "@/lib/types";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
-import { axios } from "@/lib/axios";
+import { useDeleteTodo } from "@/service/api/todos/deleteTodo";
+import { useUpdateTodo } from "@/service/api/todos/updateTodo";
 
 type TodoItemProps = {
   todo: Todo;
 };
 
 const TodoItem = ({ todo }: TodoItemProps) => {
+  const mutationDelete = useDeleteTodo();
+  const mutationUpdate = useUpdateTodo();
+
   const updateTodo = async (todo: Todo) => {
-    const response = await axios.put(`/todos/${todo.id}`, todo);
-    console.log(response);
+    mutationUpdate.mutateAsync({ todoId: todo.id, todo: todo });
   };
 
   const deleteTodo = () => {
     const isConfirmed = confirm("Are you sure to delete todo?");
     if (isConfirmed) {
-      axios.delete(`/todos/${todo.id}`);
+      mutationDelete.mutateAsync(todo.id);
     }
   };
 

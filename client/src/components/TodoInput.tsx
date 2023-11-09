@@ -4,17 +4,15 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { BiSolidBook } from "react-icons/bi";
 import { useState } from "react";
-import { axios } from "@/lib/axios";
+import { useAddTodo } from "@/service/api/todos/addTodo";
 
 const TodoInput = () => {
+  const addTodoMutation = useAddTodo();
   const [todoInput, setTodoInput] = useState("");
 
   const handleAddTodo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await axios.post("/todos", {
-      title: todoInput,
-      done: false,
-    });
+    addTodoMutation.mutateAsync({ title: todoInput });
   };
 
   return (

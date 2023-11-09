@@ -3,3 +3,8 @@ export type Todo = {
   title: string;
   done: boolean;
 };
+
+export type TodoDto = {
+  title: string;
+  done?: boolean;
+};
