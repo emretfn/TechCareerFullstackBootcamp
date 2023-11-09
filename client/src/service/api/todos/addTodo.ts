@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 
 import { axios } from "@/lib/axios";
 import { Todo, TodoDto } from "@/lib/types";
+import { toast } from "sonner";
 
 export const addTodo = async (todo: TodoDto) => {
   const { data } = await axios.post("/todos", todo);
@@ -27,9 +28,11 @@ export const useAddTodo = () => {
       if (context?.previousTodos) {
         queryClient.setQueryData(["todos"], context.previousTodos);
       }
+      toast.error("Something went wrong");
     },
     onSuccess: () => {
       queryClient.invalidateQueries("todos");
+      toast.success("Todo added successfully");
     },
   });
 };

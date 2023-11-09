@@ -4,7 +4,7 @@ import TodoItem from "./TodoListItem";
 import { useTodos } from "@/service/api/todos/getTodos";
 import { useState } from "react";
 
-const TodoItemList = () => {
+const TodoList = () => {
   const [filter, setFilter] = useState<"all" | "done" | "todo">("all");
   const todosQuery = useTodos({
     select: (todos) => {
@@ -51,4 +51,4 @@ const TodoItemList = () => {
   );
 };
 
-export default TodoItemList;
+export default TodoList;

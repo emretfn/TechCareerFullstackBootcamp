@@ -1,6 +1,7 @@
 import { axios } from "@/lib/axios";
 import { Todo } from "@/lib/types";
 import { useMutation, useQueryClient } from "react-query";
+import { toast } from "sonner";
 
 export const deleteTodo = async (todoId: string) => {
   const { data } = await axios.delete(`/todos/${todoId}`);
@@ -28,9 +29,11 @@ export const useDeleteTodo = () => {
       if (context?.previousTodos) {
         queryClient.setQueryData(["todos"], context.previousTodos);
       }
+      toast.error("Something went wrong");
     },
     onSuccess: () => {
       queryClient.invalidateQueries("todos");
+      toast.success("Todo deleted successfully");
     },
   });
 };

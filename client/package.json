@@ -16,7 +16,8 @@
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
-    "react-query": "^3.39.3"
+    "react-query": "^3.39.3",
+    "sonner": "^1.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.8.10",

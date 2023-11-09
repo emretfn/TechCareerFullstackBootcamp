@@ -1,6 +1,7 @@
 import { axios } from "@/lib/axios";
 import { Todo, TodoDto } from "@/lib/types";
 import { useMutation, useQueryClient } from "react-query";
+import { toast } from "sonner";
 
 const updateTodo = async (todoId: string, todo: TodoDto) => {
   const { data } = await axios.put(`/todos/${todoId}`, todo);
@@ -36,9 +37,11 @@ export const useUpdateTodo = () => {
       if (context?.previousTodos) {
         queryClient.setQueryData(["todos"], context.previousTodos);
       }
+      toast.error("Something went wrong");
     },
     onSuccess: () => {
       queryClient.invalidateQueries("todos");
+      toast.success("Todo updated successfully");
     },
   });
 };

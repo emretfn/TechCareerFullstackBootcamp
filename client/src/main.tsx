@@ -6,6 +6,7 @@ import "./styles/reset.css";
 import "./styles/global.css";
 import { QueryClient, QueryClientProvider, DefaultOptions } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { Toaster } from "sonner";
 
 const queryConfig: DefaultOptions = {
   queries: {
@@ -21,6 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
+      <Toaster position="bottom-center" />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>
