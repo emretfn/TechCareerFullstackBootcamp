@@ -21,7 +21,7 @@ public class Todo {
     private String title;
 
     @Column(name = "done")
-    @Schema(name = "done", description = "Todo done status", example = "false")
+    @Schema(name = "done", description = "Todo done status", example = "false", defaultValue = "false")
     private Boolean done = false;
 
 }
