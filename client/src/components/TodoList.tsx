@@ -2,9 +2,22 @@ import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import TodoItem from "./TodoListItem";
 import { useTodos } from "@/service/api/todos/getTodos";
+import { useState } from "react";
 
 const TodoItemList = () => {
-  const todosQuery = useTodos();
+  const [filter, setFilter] = useState<"all" | "done" | "todo">("all");
+  const todosQuery = useTodos({
+    select: (todos) => {
+      switch (filter) {
+        case "done":
+          return todos.filter((todo) => todo.done);
+        case "todo":
+          return todos.filter((todo) => !todo.done);
+        default:
+          return todos;
+      }
+    },
+  });
 
   if (todosQuery.isLoading) {
     return <div>Loading...</div>;
@@ -18,9 +31,15 @@ const TodoItemList = () => {
     <Stack gap={4}>
       {/* Filter Todos */}
       <Stack direction="horizontal" className="justify-content-between" gap={4}>
-        <Button className="w-100">All</Button>
-        <Button className="w-100">Done</Button>
-        <Button className="w-100">Todo</Button>
+        <Button className="w-100" onClick={() => setFilter("all")}>
+          All
+        </Button>
+        <Button className="w-100" onClick={() => setFilter("done")}>
+          Done
+        </Button>
+        <Button className="w-100" onClick={() => setFilter("todo")}>
+          Todo
+        </Button>
       </Stack>
       {/* Todo List */}
       <Stack gap={3}>

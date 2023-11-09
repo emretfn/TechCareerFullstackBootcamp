@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { UseQueryOptions, useQuery } from "react-query";
 
 import { axios } from "@/lib/axios";
 
@@ -10,9 +10,10 @@ export const getTodos = async (): Promise<Todo[]> => {
   return data;
 };
 
-export const useTodos = () => {
+export const useTodos = (config: UseQueryOptions<Todo[], Error> = {}) => {
   return useQuery<Todo[], Error>({
     queryKey: ["todos"],
     queryFn: () => getTodos(),
+    ...config,
   });
 };
