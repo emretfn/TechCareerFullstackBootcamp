@@ -1,25 +1,21 @@
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import TodoItem from "./TodoListItem";
+import { useEffect, useState } from "react";
+import { axios } from "@/lib/axios";
+import { Todo } from "@/lib/types";
 
 const TodoItemList = () => {
-  const mockTodo = [
-    {
-      id: "1",
-      title: "Todo 1",
-      done: false,
-    },
-    {
-      id: "2",
-      title: "Todo 2",
-      done: true,
-    },
-    {
-      id: "3",
-      title: "Todo 3",
-      done: false,
-    },
-  ];
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  useEffect(() => {
+    async function getTodos() {
+      const { data } = await axios.get("/todos");
+      setTodos(data);
+    }
+
+    getTodos();
+  }, []);
 
   return (
     <Stack gap={4}>
@@ -31,7 +27,7 @@ const TodoItemList = () => {
       </Stack>
       {/* Todo List */}
       <Stack gap={3}>
-        {mockTodo.map((todo) => (
+        {todos.map((todo) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}
       </Stack>

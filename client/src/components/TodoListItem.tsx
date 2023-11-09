@@ -3,19 +3,23 @@ import Form from "react-bootstrap/Form";
 
 import { Todo } from "@/lib/types";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
+import { axios } from "@/lib/axios";
 
 type TodoItemProps = {
   todo: Todo;
 };
 
 const TodoItem = ({ todo }: TodoItemProps) => {
-  const updateTodo = (todo: Todo) => {
-    alert(`todo updated to ${JSON.stringify(todo, null, 2)}`);
+  const updateTodo = async (todo: Todo) => {
+    const response = await axios.put(`/todos/${todo.id}`, todo);
+    console.log(response);
   };
 
   const deleteTodo = () => {
     const isConfirmed = confirm("Are you sure to delete todo?");
-    if (isConfirmed) alert("todo deleted");
+    if (isConfirmed) {
+      axios.delete(`/todos/${todo.id}`);
+    }
   };
 
   const editTodo = () => {
