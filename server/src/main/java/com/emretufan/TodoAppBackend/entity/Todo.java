@@ -22,6 +22,6 @@ public class Todo {
 
     @Column(name = "done")
     @Schema(name = "done", description = "Todo done status", example = "false")
-    private Boolean done;
+    private Boolean done = false;
 
 }
