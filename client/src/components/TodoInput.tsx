@@ -13,6 +13,7 @@ const TodoInput = () => {
   const handleAddTodo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     addTodoMutation.mutateAsync({ title: todoInput });
+    setTodoInput("");
   };
 
   return (
