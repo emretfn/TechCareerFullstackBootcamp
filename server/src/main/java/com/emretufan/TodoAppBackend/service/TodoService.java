@@ -1,6 +1,8 @@
 package com.emretufan.TodoAppBackend.service;
 
 import com.emretufan.TodoAppBackend.entity.Todo;
+import com.emretufan.TodoAppBackend.exception.TodoNotFoundException;
+import com.emretufan.TodoAppBackend.exception.TodoTitleNotNullException;
 import com.emretufan.TodoAppBackend.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,11 @@ public class TodoService {
 
     //Create Todo
     public Todo addTodo(Todo todo) {
-        return todoRepository.save(todo);
+        if (todo.getTitle() == null || todo.getTitle().isBlank() || todo.getTitle().isEmpty()) {
+            throw new TodoTitleNotNullException("Todo title can't be empty");
+        }else {
+            return todoRepository.save(todo);
+        }
     }
 
     //Find all todos
@@ -25,13 +31,18 @@ public class TodoService {
 
     //Find todo by id
     public Todo findTodoById(Long todoId) {
-        return todoRepository.findById(todoId).get();
+        return todoRepository.findById(todoId).orElseThrow(() -> new TodoNotFoundException("Todo not found with the given ID."));
     }
 
 
     //Delete todo
     public void deleteTodo(Long todoId) {
-        todoRepository.deleteById(todoId);
+        boolean isExist = todoRepository.existsById(todoId);
+        if(isExist) {
+            todoRepository.deleteById(todoId);
+        } else {
+            throw new TodoNotFoundException("Todo not found with the given ID.");
+        }
     }
 
 
