@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -78,6 +77,33 @@ public class TodoController {
     )
     public ResponseEntity<Void> deleteTodo(@PathVariable("todoId") Long todoId) {
         todoService.deleteTodo(todoId);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    //Delete all todos
+    @DeleteMapping("/todos/all")
+    @Operation(summary = "Delete all todos",
+            description = "You can delete all todos with this endpoint",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "It returns nothing")
+            }
+    )
+    public ResponseEntity<Void> deleteAllTodo() {
+        todoService.deleteAllTodos();
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    //Delete done todos
+    @DeleteMapping("/todos/done")
+    @Operation(summary = "Delete all todos",
+            description = "You can delete done=true todos with this endpoint",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "It returns nothing"),
+                    @ApiResponse(responseCode = "404", description = "No todo with done=true found.")
+            }
+    )
+    public ResponseEntity<Void> deleteDoneTodo() {
+        todoService.deleteDoneTodo();
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

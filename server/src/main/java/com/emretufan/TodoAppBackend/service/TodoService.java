@@ -45,6 +45,24 @@ public class TodoService {
         }
     }
 
+    //Delete all
+
+    public void  deleteAllTodos() {
+        todoRepository.deleteAll();
+    }
+
+    //Delete dones
+
+    public void  deleteDoneTodo() {
+        List<Todo> doneTodos = todoRepository.findByDone(true);
+
+        if (!doneTodos.isEmpty()) {
+            todoRepository.deleteAll(doneTodos);
+        }else {
+            throw new TodoNotFoundException("No todos with done=true found.");
+        }
+    }
+
 
     //update todo
     public Todo updateTodo(Long todoId, Todo newTodo) {
