@@ -95,7 +95,7 @@ public class TodoController {
 
     //Delete done todos
     @DeleteMapping("/todos/done")
-    @Operation(summary = "Delete all todos",
+    @Operation(summary = "Delete done todos",
             description = "You can delete done=true todos with this endpoint",
             responses = {
                     @ApiResponse(responseCode = "200", description = "It returns nothing"),
