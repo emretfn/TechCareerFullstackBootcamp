@@ -59,9 +59,15 @@ pnpm install
 pnpm dev
 ```
 
-After running frontend and backend
+After running the frontend and backend, the urls of the services are as follows:
 
-`localhost:5173` is the frontend
-`localhost:5000` is the backend
-`localhost:5000/swagger-ui.html` is the swagger docs for backend
-`localhost:5000/h2-console` is the H2DB for the backend
+```bash
+#Frontend
+http://localhost:5173
+#Backend
+http://localhost:5000
+#Swagger Docs for backend
+http://localhost:5000/swagger-ui.html
+#H2DB for backend
+http://localhost:5000/h2-console
+```
