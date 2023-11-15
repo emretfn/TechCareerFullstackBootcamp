@@ -9,6 +9,18 @@ export const deleteTodo = async (todoId: string) => {
   return data;
 };
 
+export const deleteAllTodos = async () => {
+  const { data } = await axios.delete(`/todos/all`);
+
+  return data;
+};
+
+export const deleteDoneTodos = async () => {
+  const { data } = await axios.delete(`/todos/done`);
+
+  return data;
+};
+
 export const useDeleteTodo = () => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -34,6 +46,34 @@ export const useDeleteTodo = () => {
     onSuccess: () => {
       queryClient.invalidateQueries("todos");
       toast.success("Todo deleted successfully");
+    },
+  });
+};
+
+export const useDeleteAllTodos = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteAllTodos,
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+      toast.success("All todos deleted successfully");
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+};
+
+export const useDeleteDoneTodos = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteDoneTodos,
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+      toast.success("Done todos deleted successfully");
+    },
+    onError: () => {
+      toast.error("Something went wrong");
     },
   });
 };

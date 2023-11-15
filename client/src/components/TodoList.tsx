@@ -3,6 +3,10 @@ import Button from "react-bootstrap/Button";
 import TodoItem from "./TodoListItem";
 import { useTodos } from "@/service/api/todos/getTodos";
 import { useState } from "react";
+import {
+  useDeleteAllTodos,
+  useDeleteDoneTodos,
+} from "@/service/api/todos/deleteTodo";
 
 const TodoList = () => {
   const [filter, setFilter] = useState<"all" | "done" | "todo">("all");
@@ -18,6 +22,22 @@ const TodoList = () => {
       }
     },
   });
+  const deleteAllTodoMutation = useDeleteAllTodos();
+  const deleteDoneTodoMutation = useDeleteDoneTodos();
+
+  const handleDeleteAllTodos = () => {
+    const isConfirmed = confirm("Are you sure to delete all todos?");
+    if (isConfirmed) {
+      deleteAllTodoMutation.mutate();
+    }
+  };
+
+  const handleDeleteDoneTodos = () => {
+    const isConfirmed = confirm("Are you sure to delete done todos?");
+    if (isConfirmed) {
+      deleteDoneTodoMutation.mutate();
+    }
+  };
 
   if (todosQuery.isLoading) {
     return <div>Loading...</div>;
@@ -46,6 +66,24 @@ const TodoList = () => {
         {todosQuery.data.map((todo) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}
+      </Stack>
+      <Stack direction="horizontal" gap={4}>
+        <Button
+          className="w-100"
+          variant="danger"
+          type="button"
+          onClick={handleDeleteAllTodos}
+        >
+          Delete all todos
+        </Button>
+        <Button
+          className="w-100"
+          variant="danger"
+          type="button"
+          onClick={handleDeleteDoneTodos}
+        >
+          Delete done todos
+        </Button>
       </Stack>
     </Stack>
   );
