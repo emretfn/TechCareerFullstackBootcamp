@@ -22,6 +22,8 @@
 - React
 - Typescript
 - Bootstrap
+- React Query
+- Axios
 
 ## Get project on your local
 
